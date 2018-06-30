@@ -1,0 +1,9 @@
+.vs/
+*.ilk
+*.VC.db
+*.VC.VC.opendb
+BigFileSort/Debug/
+BigFileSort/Release/
+*.metagen
+*.pdb
+*desktop.ini
