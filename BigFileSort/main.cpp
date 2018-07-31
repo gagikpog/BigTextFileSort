@@ -73,7 +73,7 @@ bool MergeArrFile(vector<string> &sArr, string filein, string fileOutput)
 		return false;
 	string str;
 	int i = 0;
-	bool b1 = !fin.eof(), b2 = i<sArr.size();
+	bool b1 = !fin.eof(), b2 = i < sArr.size();
 
 	if (!b1 || !b2)
 		return true;
@@ -132,12 +132,12 @@ bool ArrOut(vector<string> &sArr, string fileName)
 	return true;
 }
 
-int main(int argc,char** argv)
+bool runingError(int argc, char** argv,int& buff) 
 {
 	if (argc <= 1)
 	{
 		cout << "syntax error\n";
-		return 1;
+		return true;
 	}
 	if (string(argv[1]) == "/\?")
 	{
@@ -145,10 +145,9 @@ int main(int argc,char** argv)
 		cout << "Sort [путь][имя_файла] [количество строк]" << endl;
 		cout << "Пример\n";
 		cout << "Sort input.txt 5000" << endl;
-		return 1;
+		return true;
 	}
 
-	int buff = 100;
 	try
 	{
 		if (argc > 2) {
@@ -161,9 +160,16 @@ int main(int argc,char** argv)
 	{
 		setlocale(0, "RUS");
 		cout << "Синтаксическая ошибка\n/\? - Help";
-		return 1;
+		return true;
 	}
+	return false;
+}
 
+int main(int argc,char** argv)
+{
+	int buff = 100;
+	if (runingError(argc,argv,buff))
+		return 1;
 
 	ifstream fin(argv[1]);
 	if (!fin.is_open())
@@ -173,7 +179,7 @@ int main(int argc,char** argv)
 		return 1;
 	}
 	system("md tmp");
-	vector<string> arr(buff,"");
+	vector<string> arr(buff);
 	int j = 0;
 	while (!fin.eof())
 	{
@@ -184,9 +190,9 @@ int main(int argc,char** argv)
 			getline(fin, arr[i]);
 		}
 		sort(arr.begin(), arr.begin()+i);
-		if(i >= arr.size())
+		if (i >= arr.size()) {
 			ArrOut(arr, "tmp\\first" + to_string(j++) + ".txt");
-		else { 
+		} else { 
 			arr.erase(arr.begin() + i, arr.end());
 			ArrOut(arr, "tmp\\first" + to_string(j++) + ".txt"); 
 		}
@@ -231,10 +237,5 @@ int main(int argc,char** argv)
 		b = !b;
 		j /= 2;
 	}
-	//if (b) {
-	//	system("move  first*.txt");
-	//}
-
-	//system("pause");
 	return 0;
 }
