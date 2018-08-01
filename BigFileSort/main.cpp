@@ -141,9 +141,8 @@ bool runingError(int argc, char** argv,int& buff)
 	}
 	if (string(argv[1]) == "/\?")
 	{
-		setlocale(0, "RUS");
-		cout << "Sort [путь][имя_файла] [количество строк]" << endl;
-		cout << "Пример\n";
+		cout << "Sort [path][filename] [Buffer size (line count)]" << endl;
+		cout << "Example\n";
 		cout << "Sort input.txt 5000" << endl;
 		return true;
 	}
@@ -158,8 +157,7 @@ bool runingError(int argc, char** argv,int& buff)
 	}
 	catch (const std::exception&)
 	{
-		setlocale(0, "RUS");
-		cout << "Синтаксическая ошибка\n/\? - Help";
+		cout << "Syntax error\n/\? - Help";
 		return true;
 	}
 	return false;
@@ -174,8 +172,7 @@ int main(int argc,char** argv)
 	ifstream fin(argv[1]);
 	if (!fin.is_open())
 	{
-		setlocale(0, "RUS");
-		cout << "Файл "<< argv[1] <<" не найден\n/\? - Help";
+		cout << "File "<< argv[1] <<" not find\n/\? - Help";
 		return 1;
 	}
 	system("md tmp");
